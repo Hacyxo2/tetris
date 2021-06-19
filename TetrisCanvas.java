@@ -14,18 +14,15 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Piece current;
 	protected int interval = 2000;
 	protected int level = 2;
-	protected int score;
+	public int score;
 	public Field field;
-	public MyTetris mytetris;
 	
 	
 	
-	public String score() {
-		mytetris = new MyTetris();
-		score = data.getLine() * 175 * level;
-		String score1 = String.valueOf(score);
+	public int score() {
 		
-		return score1;
+		score = data.getLine() * 175 * level;
+		return score;
 	}
 	
 	public TetrisCanvas() {
@@ -41,7 +38,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		colors[5] = new Color(255, 150, 0); // 황토색
 		colors[6] = new Color(210, 0, 240); // 보라색
 		colors[7] = new Color(40, 0, 240); // 파란색
-		colors[8] = new Color(80, 100, 80);
+		colors[8] = new Color(0, 0, 0); // 검은색
 	}
 	
 	public void start() { // 게임 시작
@@ -103,7 +100,10 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 
 	public void run() {
 		while (!stop) {
-			
+
+			MyTetris.getScore(score());
+			MyTetris.getLevel(level);
+			MyTetris.getRemoveLine(TetrisData.line);
 			try {
 				if (makeNew) { // 새로운 테트리스 조각 만들기
 					int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
@@ -138,8 +138,11 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 							current = new El(data);
 					}
 					makeNew = false;
-				} else { // 현재 만들어진 테트리스 조각 아래로 이동
+					
+				}
+				else { // 현재 만들어진 테트리스 조각 아래로 이동
 					if (current.moveDown()) {
+						
 						makeNew = true;
 						if (current.copy()) {
 							stop();
@@ -162,8 +165,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (current == null)
 			return;
-
+		
 		switch (e.getKeyCode()) {
+
+		case 32: // 스페이스
+			current.moveBottom();
+			repaint();
+			break;
+			
 		case 37: // 왼쪽 화살표
 			current.moveLeft();
 			repaint();
@@ -178,11 +187,13 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			break;
 		case 40: // 아랫쪽 화살표
 			boolean temp = current.moveDown();
+			
 			if (temp) {
 				makeNew = true;
 				if (current.copy()) {
 					stop();
 					score();
+					
 					JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);;
 				}
 			}

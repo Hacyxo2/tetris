@@ -15,7 +15,7 @@ public abstract class Piece {
 		r = new int[4];
 		c = new int[4];
 		this.data = data;
-		center = new Point(5, 0);
+		center = new Point(6, 0);
 	}
 
 	public abstract int getType();
@@ -142,7 +142,11 @@ public abstract class Piece {
 			} else
 				return;
 	}
-
+	public void moveBottom() {
+		for(int i=0; i<19; i++) {
+			this.moveDown();
+		}
+	}	
 	public void rotate() { // 조각 회전
 		int rc = roteType();
 		if (rc <= 1)

@@ -9,12 +9,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.SystemColor;
+import java.awt.Component;
+import java.awt.GridLayout;
 
 public class MyTetris extends JFrame {
 
 	private JPanel contentPane;
 	private TetrisCanvas tetrisCanvas = null;
 	private TetrisData data;
+	static JTextArea score = new JTextArea();
+	static JTextArea removeLine = new JTextArea();
+	static JTextArea level = new JTextArea();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,10 +40,9 @@ public class MyTetris extends JFrame {
 	public MyTetris() {
 		JMenuBar jb = new JMenuBar();
 		JMenu menu = new JMenu("GAME");
-		JMenuItem start, pause, exit;
-		JSplitPane splitPane = new JSplitPane();
-		splitPane.setFocusable(false);
+		JMenuItem start, exit;
 		tetrisCanvas = new TetrisCanvas();
+		
 		data = new TetrisData();
 		start = new JMenuItem("START");
 		start.addActionListener(new ActionListener() {
@@ -49,39 +56,45 @@ public class MyTetris extends JFrame {
 				System.exit(0);
 			}
 		});
-		pause = new JMenuItem("PAUSE");
-		pause.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tetrisCanvas.stop();
-			}
-		});
 
 		jb.add(menu);
 		menu.add(start);
-		menu.add(pause);
 		menu.add(exit);
 
 		setJMenuBar(jb);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1, 1, 400, 700);
+		setBounds(1, 1, 390, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		contentPane.add(tetrisCanvas, BorderLayout.CENTER);
-
-		contentPane.add(splitPane, BorderLayout.NORTH);
-
-		splitPane.setResizeWeight(0.5);
 		
-		JTextArea textArea_1 = new JTextArea();
-		splitPane.setRightComponent(textArea_1);
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JTextField score = new JTextField();
+		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		score.setFocusable(false);
+		score.setBackground(SystemColor.menu);
+		score.setText("점수: ");
+		score.setLineWrap(true);
+		score.setRows(1);
+		panel.add(score);
+		removeLine.setFocusable(false);
 		
-		splitPane.setLeftComponent(score);
-		score.setColumns(10);
+		
+		removeLine.setBackground(SystemColor.menu);
+		removeLine.setRows(1);
+		removeLine.setText("제거한 라인: ");
+		panel.add(removeLine);
+		level.setFocusable(false);
+		
+		
+		level.setBackground(SystemColor.menu);
+		level.setRows(1);
+		level.setText("레벨: ");
+		panel.add(level);
 	}
 
 	public TetrisData TetrisData() {
@@ -91,4 +104,13 @@ public class MyTetris extends JFrame {
 		return tetrisCanvas;
 	}
 	
+	public static void getScore(int Score) {
+		score.setText("점수: " + Score);
+	}
+	public static void getLevel(int Level) {
+		level.setText("레벨: " + Level);
+	}
+	public static void getRemoveLine(int Line) {
+		removeLine.setText("제거한 라인: " + Line);
+	}
 }

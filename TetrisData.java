@@ -1,18 +1,15 @@
 package project2;
 
-import java.lang.String;
 
 public class TetrisData {
 	public static final int ROW = 21;
 	public static final int COL = 12;
 	public Field field;
-	private int data[][];
-	private int line;
+	private static int data[][];
+	public static int line;
 	
-	public void setData(int i, int k) {
-		field = new Field();
-			setAt(i, k, 8);			
-	}
+	
+
 	public TetrisData() {
 		data = new int[ROW][COL];
 	}
@@ -33,6 +30,7 @@ public class TetrisData {
 	}
 	
 	public synchronized void removeLines() {
+		
 		NEXT: 							     // 배열 라벨
 		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 0과 같거나 클때까지 i--
 			boolean done = true;		   	 // done을 참
@@ -49,6 +47,7 @@ public class TetrisData {
 			}
 			if(done) {								// 위 이중배열을 반복하여 done값이 참일 때
 				line++;								// 라인++
+				
 				for(int x = i; x > 0; x--) {		// x가 행, x가 0보다 클때까지 x--
 					for(int y = 0; y < COL; y++) {  // y가 0 y가 열보다 작을 동안 y++
 						data[x][y] = data[x-1][y];	// 위에 쌓인 블럭을 아래로 내림
