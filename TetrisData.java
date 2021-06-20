@@ -8,7 +8,7 @@ public class TetrisData {
 	private static int data[][];
 	static int line = 0;
 	private int count = 0;
-	static int gauge=1;
+	static int gauge = 0;
 	
 	
 
@@ -31,29 +31,29 @@ public class TetrisData {
 		return line;
 	}
 	public void sort() {
-		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 0과 같거나 클때까지 i--	   	
-			for(int k = 1; k < COL-1; k++) { // k가 0부터 열보다 작을 동안 k++
-				if(getAt(i, k) != 0){
-					data[i][k] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
-					count++;
+		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 1과 같거나 클때까지 i--	   	
+			for(int k = 1; k < COL-1; k++) { // k가 1부터 열보다 작을 동안 k++
+				if(getAt(i, k) != 0){        // 해당 좌표가 0이 아니면 
+					data[i][k] =0;     		 // 그 좌표를 0으로 만든다. 배열에서 해당 값이 사라진다.
+					count++;				 // 지워진 수 만큼 count를 늘린다.
 				}
 			}
 		}
-		for(int i = ROW -2; i >= 1; i--) {
+		for(int i = ROW -2; i >= 1; i--) {   // i가 행 -2 부터, 0과 같거나 클때까지 i--
 			for(int k = 1; k < COL-1; k++) { // k가 0부터 열보다 작을 동안 k++
-				if(count > 0) {
-					data[i][k] = 6;
-					count--;
+				if(count > 0) { 			 // count가 0보다 크면
+					data[i][k] = (int)((Math.random() * Integer.MAX_VALUE) % 6 + 1); // 조각의 색은 숫자에 따라 바뀐다.
+					count--; 				 // count를 1 줄인다. 
 				}
 			}
-		}gauge--;
+		}gauge--; // 정렬을 사용하면 게이지를 1 줄인다.
 	}
 	public synchronized void removeLines() {
 		
 		NEXT: 							     // 배열 라벨
-		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 0과 같거나 클때까지 i--
+		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 1과 같거나 클때까지 i--
 			boolean done = true;		   	 // done을 참
-			for(int k = 1; k < COL-1; k++) { // k가 0부터 열보다 작을 동안 k++
+			for(int k = 1; k < COL-1; k++) { // k가 1부터 열보다 작을 동안 k++
 				if(data[i][k] == 0) {		 // 해당 좌표가 0이면
 					done = false;			 // done을 거짓으로 바꿈
 					continue NEXT;           // 해당 배열을 반복한다.

@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
 import java.awt.Dimension;
@@ -14,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.SystemColor;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Point;
 
 public class MyTetris extends JFrame {
 
@@ -50,6 +49,8 @@ public class MyTetris extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tetrisCanvas.start();
+				new Manuel(getLocation());
+				
 			}
 		});
 		exit = new JMenuItem("EXIT");
@@ -65,7 +66,7 @@ public class MyTetris extends JFrame {
 
 		setJMenuBar(jb);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1, 1, 350, 630);
+		setBounds(1, 1, 350, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -121,5 +122,25 @@ public class MyTetris extends JFrame {
 	}
 	static void getRemoveLine(int Line) {
 		removeLine.setText("LINE: " + Line);
+	}
+}
+class Manuel extends JFrame {
+	
+	Manuel(Point point) {
+		
+		setTitle("게임 조작 방법");
+		JPanel UserManuel = new JPanel();
+		setLocation(point);
+		setContentPane(UserManuel);
+		JLabel NewLabel = new JLabel("<html>조작법"
+								   + "<br>위쪽 방향키는 조각을 시계방향으로 회전시킵니다."
+								   + "<br>왼쪽, 오른쪽 방향키로 조각을 좌우로 움직일 수 있습니다."
+								   + "<br>아래 방향키를 눌러 조각을 한칸 아래로 움직일 수 있습니다."
+								   + "<br>Space 바를 누르면 조각을 바로 아래로 내릴 수 있습니다."
+								   + "<br>GAUGE가 1 이상일 때 Enter키를 누르면 조각들이 재정렬됩니다.  </html>");
+		UserManuel.add(NewLabel);
+		setSize(400, 150);
+		setResizable(false);
+		setVisible(true);
 	}
 }

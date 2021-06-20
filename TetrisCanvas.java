@@ -42,7 +42,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void start() { // 게임 시작
-		
+	
 		data.clear();
 		worker = new Thread(this);
 		worker.start();
@@ -169,8 +169,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		System.out.println(e);
 		switch (e.getKeyCode()) {
 		case 10: //엔터키
-			if(TetrisData.gauge > 0) {
-				data.sort();
+			if(TetrisData.gauge > 0) { //게이지가 0보다 크면
+				data.sort(); //정렬 실행
 			}
 			repaint();
 			break;
