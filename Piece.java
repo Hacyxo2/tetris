@@ -142,11 +142,12 @@ public abstract class Piece {
 			} else
 				return;
 	}
-	public void moveBottom() {
-		for(int i=0; i<19; i++) {
+	public void moveBottom() { // 가장 아래로 내림
+		for(int i=0; i<21; i++) {
 			this.moveDown();
 		}
-	}	
+	}
+	
 	public void rotate() { // 조각 회전
 		int rc = roteType();
 		if (rc <= 1)
@@ -159,7 +160,7 @@ public abstract class Piece {
 			rotate4();
 		}
 	}
-
+	
 	public void rotate4() { // 조각 회전
 		
 		if(center.x == 1) {// 왼쪽 벽에 붙어있으면 한 칸 오른쪽으로 밀어냄
@@ -169,12 +170,14 @@ public abstract class Piece {
 		else if(center.x == TetrisData.COL - 2) {// 오른쪽 벽에 붙어있으면 한 칸 왼쪽으로 밀어냄
 				center.x--;
 		}
-		
 		if (center.x > 1 && center.x < TetrisData.COL - 2) {// 양쪽 벽에 븥어있지 않은 블럭
 			
 			//왼쪽에 Bar 블럭이 아래가 긴 경우
-			if(center.x + getMinY() < 1) {
-				center.x++;
+			if(center.x + getMinY() <= 1) {
+				center.x++; // 한 칸 오른쪽으로 밀어냄
+			}
+			if(center.x == TetrisData.COL-3 && center.x + getMaxY() <= TetrisData.COL) { // 오른쪽에 Bar 블럭이
+				center.x--;					// 벽에서 두 칸 떨어져있고 위가 긴 경우 한 칸 왼쪽으로 밀어냄
 			}
 						
 			for (int i = 0; i < 4; i++) {

@@ -23,6 +23,7 @@ public class MyTetris extends JFrame {
 	static JTextArea score = new JTextArea();
 	static JTextArea removeLine = new JTextArea();
 	static JTextArea level = new JTextArea();
+	static JTextArea gauge = new JTextArea();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -38,6 +39,7 @@ public class MyTetris extends JFrame {
 	}
 
 	public MyTetris() {
+		setTitle("Tetris");
 		JMenuBar jb = new JMenuBar();
 		JMenu menu = new JMenu("GAME");
 		JMenuItem start, exit;
@@ -63,7 +65,7 @@ public class MyTetris extends JFrame {
 
 		setJMenuBar(jb);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1, 1, 390, 700);
+		setBounds(1, 1, 350, 630);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -73,28 +75,33 @@ public class MyTetris extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		panel.setLayout(new GridLayout(2, 4, 0, 0));
 		score.setFocusable(false);
 		score.setBackground(SystemColor.menu);
-		score.setText("점수: ");
-		score.setLineWrap(true);
+		score.setText("SCORE: ");
 		score.setRows(1);
 		panel.add(score);
-		removeLine.setFocusable(false);
-		
-		
-		removeLine.setBackground(SystemColor.menu);
-		removeLine.setRows(1);
-		removeLine.setText("제거한 라인: ");
-		panel.add(removeLine);
 		level.setFocusable(false);
 		
 		
 		level.setBackground(SystemColor.menu);
 		level.setRows(1);
-		level.setText("레벨: ");
+		level.setText("LEVEL: ");
 		panel.add(level);
+		removeLine.setFocusable(false);
+		
+		
+		removeLine.setBackground(SystemColor.menu);
+		removeLine.setRows(1);
+		removeLine.setText("LINES: ");
+		panel.add(removeLine);
+		gauge.setFocusable(false);
+		gauge.setBackground(SystemColor.menu);
+		gauge.setText("GAUGE: ");
+		gauge.setRows(1);
+		panel.add(gauge);
+		
+		
 	}
 
 	public TetrisData TetrisData() {
@@ -103,14 +110,16 @@ public class MyTetris extends JFrame {
 	public TetrisCanvas TetrisCanvas() {
 		return tetrisCanvas;
 	}
-	
-	public static void getScore(int Score) {
-		score.setText("점수: " + Score);
+	static void getGauge(int Gauge) {
+		gauge.setText("GAUGE: " + Gauge);
 	}
-	public static void getLevel(int Level) {
-		level.setText("레벨: " + Level);
+	static void getScore(int Score) {
+		score.setText("SCORE: " + Score);
 	}
-	public static void getRemoveLine(int Line) {
-		removeLine.setText("제거한 라인: " + Line);
+	static void getLevel(int Level) {
+		level.setText("LEVEL: " + Level);
+	}
+	static void getRemoveLine(int Line) {
+		removeLine.setText("LINE: " + Line);
 	}
 }

@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Thread worker;
-	protected Color colors[];
+	protected static Color colors[];
 	protected int w = 25;
 	protected TetrisData data;
 	protected int margin = 20;
@@ -103,7 +103,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 
 			MyTetris.getScore(score());
 			MyTetris.getLevel(level);
-			MyTetris.getRemoveLine(TetrisData.line);
+			MyTetris.getRemoveLine(data.line);
+			MyTetris.getGauge(data.gauge);
 			try {
 				if (makeNew) { // 새로운 테트리스 조각 만들기
 					int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
@@ -165,9 +166,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (current == null)
 			return;
-		
+		System.out.println(e);
 		switch (e.getKeyCode()) {
-
+		case 10: //엔터키
+			if(TetrisData.gauge > 0) {
+				data.sort();
+			}
+			repaint();
+			break;
 		case 32: // 스페이스
 			current.moveBottom();
 			repaint();

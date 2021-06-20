@@ -6,7 +6,9 @@ public class TetrisData {
 	public static final int COL = 12;
 	public Field field;
 	private static int data[][];
-	public static int line;
+	static int line = 0;
+	private int count = 0;
+	static int gauge=1;
 	
 	
 
@@ -28,7 +30,24 @@ public class TetrisData {
 		
 		return line;
 	}
-	
+	public void sort() {
+		for(int i = ROW - 1; i >= 1; i--){   // i가 행 -1 부터, 0과 같거나 클때까지 i--	   	
+			for(int k = 1; k < COL-1; k++) { // k가 0부터 열보다 작을 동안 k++
+				if(getAt(i, k) != 0){
+					data[i][k] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
+					count++;
+				}
+			}
+		}
+		for(int i = ROW -2; i >= 1; i--) {
+			for(int k = 1; k < COL-1; k++) { // k가 0부터 열보다 작을 동안 k++
+				if(count > 0) {
+					data[i][k] = 6;
+					count--;
+				}
+			}
+		}gauge--;
+	}
 	public synchronized void removeLines() {
 		
 		NEXT: 							     // 배열 라벨
@@ -47,7 +66,9 @@ public class TetrisData {
 			}
 			if(done) {								// 위 이중배열을 반복하여 done값이 참일 때
 				line++;								// 라인++
-				
+				if(line % 5 == 0) {
+					gauge++;
+				}
 				for(int x = i; x > 0; x--) {		// x가 행, x가 0보다 클때까지 x--
 					for(int y = 0; y < COL; y++) {  // y가 0 y가 열보다 작을 동안 y++
 						data[x][y] = data[x-1][y];	// 위에 쌓인 블럭을 아래로 내림
